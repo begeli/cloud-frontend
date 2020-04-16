@@ -85,7 +85,7 @@ export default function Home() {
         <CssBaseline />
         <div className={classes.paper}>
             <Typography component="h1" variant="h5">
-                Create a Custome URL
+                Create a Custom URL
             </Typography>
             <form className={classes.form} noValidate>
             <TextField
