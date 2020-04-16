@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -44,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function AdminSignIn() {
   const classes = useStyles();
 
   return (
@@ -63,10 +62,10 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="username"
+            id="adminUsername"
             label="Username"
-            name="username"
-            autoComplete="username"
+            name="adminUsername"
+            autoComplete="adminUsername"
             autoFocus
           />
           <TextField
@@ -74,11 +73,11 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            name="password"
+            name="adminPassword"
             label="Password"
             type="password"
-            id="password"
-            autoComplete="current-password"
+            id="adminPassword"
+            autoComplete="adminPassword"
           />
           
           <Button
@@ -87,23 +86,11 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             component={Link}
-            to="/home"
+            to="/ahome"
             className={classes.submit}
           >
             Sign In
           </Button>
-          <Grid container>
-          <Grid item xs>
-              <Link to="/asignin" variant="body2">
-                {"Go to Admins' Page"}
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link to="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>            
-          </Grid>
         </form>
       </div>
       <Box mt={8}>
