@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,7 +7,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Link}  from "react-router-dom";
+import { Link }  from "react-router-dom";
 import NavBar from './NavBar';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles();
-
+  //const email = localStorage.getItem('email');
+  //const [email, setEmail] = useState("");
   return (
     <div>
         <NavBar />
@@ -43,7 +44,7 @@ export default function Home() {
             <LinkIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-                Welcome to URL Shortener
+                Welcome 
             </Typography>
             <form className={classes.form} noValidate>
             <TextField
@@ -126,4 +127,5 @@ export default function Home() {
     </div>
     
   );
+    
 }

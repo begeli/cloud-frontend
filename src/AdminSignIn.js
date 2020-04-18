@@ -62,10 +62,10 @@ export default function AdminSignIn() {
             margin="normal"
             required
             fullWidth
-            id="adminUsername"
-            label="Username"
-            name="adminUsername"
-            autoComplete="adminUsername"
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
             autoFocus
           />
           <TextField
