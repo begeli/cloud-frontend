@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn(props) {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,7 +43,7 @@ export default function SignIn() {
     .then(res => {
       if (res.status === 200) {
         setAuthorization(true);
-        localStorage.setItem('email', email);
+        props.handleSuccessfulAuth(email);
         //history.push("/home")
       } else {
         console.log(res)
@@ -77,7 +77,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign in {props.loggedInStatus}
           </Typography>
           <form className={classes.form} onSubmit={onFinish()}noValidate>
             <TextField

@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Home() {
+export default function Home(props) {
   const classes = useStyles();
   //const email = localStorage.getItem('email');
   //const [email, setEmail] = useState("");
@@ -44,7 +44,7 @@ export default function Home() {
             <LinkIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-                Welcome 
+                Welcome {props.email}
             </Typography>
             <form className={classes.form} noValidate>
             <TextField
