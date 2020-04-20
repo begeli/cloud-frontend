@@ -9,6 +9,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link }  from "react-router-dom";
 import NavBar from './NavBar';
+import axios from "axios";
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,8 +34,34 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home(props) {
   const classes = useStyles();
-  //const email = localStorage.getItem('email');
-  //const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
+  const [originalUrl, setOriginalUrl] = useState("");
+  const [shortenedUrl, setShortenedUrl] = useState("")
+  //setEmail(props.email);
+
+  const onFinish = () =>  {
+    console.log("here ", props.email);
+    const data = {_id: null, URL:originalUrl, hash:"", userMail:props.email, date:moment().format("YYYY-MM-DD")};
+    console.log(data);
+    axios.post("http://18.197.151.94:8080/Urls/shorten", data)    
+    .then(res => {
+      console.log(res);
+      if (res.status === 200) {
+        //setAuthorization(true);
+        //props.handleSuccessfulAuth(email);
+        //history.push("/home")
+      } else {
+        //console.log(res)
+      }
+    })
+    .catch(res => console.log("Error"));    
+  }
+
+  const updateOriginalUrl = (event) => {    
+    setOriginalUrl(event.target.value);
+    //console.log(originalUrl);
+  };
+  
   return (
     <div>
         <NavBar />
@@ -46,7 +74,7 @@ export default function Home(props) {
             <Typography component="h1" variant="h5">
                 Welcome {props.email}
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} onSubmit={onFinish()} noValidate>
             <TextField
                 variant="outlined"
                 margin="normal"
@@ -57,6 +85,7 @@ export default function Home(props) {
                 name="fullUrl"
                 autoComplete="fullUrl"
                 autoFocus
+                onChange={updateOriginalUrl}
             />
 
             <Button
@@ -78,6 +107,7 @@ export default function Home(props) {
                 label="Shortened URL"
                 id="shortenedUrl"
                 autoComplete="shortenedUrl"
+                value={shortenedUrl}
             />                   
             </form>
         </div>

@@ -42,6 +42,7 @@ export default function SignIn(props) {
     axios.post("http://18.197.151.94:8080/login", data)    
     .then(res => {
       if (res.status === 200) {
+        //console.log("Response header ", res.headers);
         setAuthorization(true);
         props.handleSuccessfulAuth(email);
         //history.push("/home")

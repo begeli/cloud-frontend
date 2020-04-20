@@ -21,7 +21,6 @@ export default class  App extends Component {
   }
 
   handleSuccessfulAuth(data) {
-    console.log("here ", data);
     this.setState({
       loggedInStatus: "LOGGED_IN",
       email: data     
