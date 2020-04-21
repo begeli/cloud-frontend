@@ -6,6 +6,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Home from './Home';
 import LinkAnalytics from './LinkAnalytics';
+import RedirectionPage from './RedirectionPage';
 import './App.css';
 
 export default class  App extends Component {
@@ -32,6 +33,10 @@ export default class  App extends Component {
       <div >
         <Router>
           <Switch >
+          <Route 
+              exact path="/redirection/:hash" 
+              component={RedirectionPage} 
+            />
             <Route 
               exact path="/asignin" 
               component={AdminSignIn} 

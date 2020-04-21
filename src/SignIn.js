@@ -42,7 +42,7 @@ export default function SignIn(props) {
     axios.post("http://18.197.151.94:8080/login", data)    
     .then(res => {
       if (res.status === 200) {
-        //console.log("Response header ", res.headers);
+        console.log("Response  ", res);
         setAuthorization(true);
         props.handleSuccessfulAuth(email);
         //history.push("/home")
@@ -51,10 +51,6 @@ export default function SignIn(props) {
       }
     })
     .catch(res => console.log("Error"));
-
-    //.then(res => res.json());
-    //console.log( 'Hello MF');     
-    //console.log( 'Email: ', email, ' Password: ', password);   
   }
 
   const updateEmail = (event) => {

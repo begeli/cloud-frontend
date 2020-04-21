@@ -36,7 +36,9 @@ export default function Home(props) {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [originalUrl, setOriginalUrl] = useState("");
-  const [shortenedUrl, setShortenedUrl] = useState("")
+  const [shortenedUrl, setShortenedUrl] = useState("");
+  const redirectionUrl = "http://18.197.151.94:8080/Urls/";//http://localhost:3000/";
+
   //setEmail(props.email);
 
   const onFinish = () =>  {
@@ -46,12 +48,13 @@ export default function Home(props) {
     axios.post("http://18.197.151.94:8080/Urls/shorten", data)    
     .then(res => {
       console.log(res);
-      if (res.status === 200) {
+      if (res.status === 200) {        
         //setAuthorization(true);
         //props.handleSuccessfulAuth(email);
         //history.push("/home")
+        setShortenedUrl(redirectionUrl + res.data.hash);
       } else {
-        //console.log(res)
+        console.log(res)
       }
     })
     .catch(res => console.log("Error"));    
