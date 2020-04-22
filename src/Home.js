@@ -34,30 +34,57 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home(props) {
   const classes = useStyles();
-  const [email, setEmail] = useState("");
   const [originalUrl, setOriginalUrl] = useState("");
+  const [originalUrl4Custom, setOrginal4Custom] = useState("");
+  const [customUrl, setCustomUrl] = useState("");
   const [shortenedUrl, setShortenedUrl] = useState("");
-  const redirectionUrl = "http://18.197.151.94:8080/Urls/";//http://localhost:3000/";
-
-  //setEmail(props.email);
+  const redirectionUrl = "http://18.197.151.94:8080/Urls/";//http://localhost:3000/";  
 
   const onFinish = () =>  {
-    console.log("here ", props.email);
-    const data = {_id: null, URL:originalUrl, hash:"", userMail:props.email, date:moment().format("YYYY-MM-DD")};
-    console.log(data);
-    axios.post("http://18.197.151.94:8080/Urls/shorten", data)    
-    .then(res => {
-      console.log(res);
-      if (res.status === 200) {        
-        //setAuthorization(true);
-        //props.handleSuccessfulAuth(email);
-        //history.push("/home")
-        setShortenedUrl(redirectionUrl + res.data.hash);
-      } else {
-        console.log(res)
+    if (originalUrl !== "") {
+      console.log("Regular url shortener");
+      const data = {_id: null, URL:originalUrl, hash:"", userMail:props.email, date:moment().format("YYYY-MM-DD")};
+      console.log(data);
+      axios.post("http://18.197.151.94:8080/Urls/shorten", data)    
+      .then(res => {
+        console.log(res);
+        if (res.status === 200) {        
+          //setAuthorization(true);
+          //props.handleSuccessfulAuth(email);
+          //history.push("/home")
+          setShortenedUrl(redirectionUrl + res.data.hash);
+        } else {
+          console.log(res)
+        }
+      })
+      .catch(res => console.log(res));    
+    }
+    
+  }
+
+  const onFinishCustom = () =>  {    
+    if (originalUrl4Custom !== "" && customUrl !== "") {
+      console.log("Custom url shortener");
+      const headers = {
+        "hash":customUrl
       }
-    })
-    .catch(res => console.log("Error"));    
+      const data = {_id: null, URL:originalUrl4Custom, hash:customUrl, userMail:props.email, date:moment().format("YYYY-MM-DD")};
+      console.log(data);
+      axios.post("http://18.197.151.94:8080/Urls/customshorten", data, {headers: headers})    
+      .then(res => {
+        console.log(res);
+        if (res.status === 200) {        
+          //setAuthorization(true);
+          //props.handleSuccessfulAuth(email);
+          //history.push("/home")
+          //setShortenedUrl(redirectionUrl + res.data.hash);
+        } else {
+          console.log(res)
+        }
+      })
+      .catch(res => console.log("Error"));    
+    }
+    
   }
 
   const updateOriginalUrl = (event) => {    
@@ -65,6 +92,16 @@ export default function Home(props) {
     //console.log(originalUrl);
   };
   
+  const updateOriginalUrl4Custom = (event) => {    
+    setOrginal4Custom(event.target.value);
+    //console.log(originalUrl);
+  };
+
+  const updateCustomUrl = (event) => {    
+    setCustomUrl(event.target.value);
+    //console.log(originalUrl);
+  };
+
   return (
     <div>
         <NavBar />
@@ -121,7 +158,7 @@ export default function Home(props) {
             <Typography component="h1" variant="h5">
                 Create a Custom URL
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} onSubmit={onFinishCustom()} noValidate>
             <TextField
                 variant="outlined"
                 margin="normal"
@@ -132,6 +169,7 @@ export default function Home(props) {
                 name="fullUrl2"
                 autoComplete="fullUrl2"
                 autoFocus
+                onChange={updateOriginalUrl4Custom}
             />
 
             <TextField
@@ -143,6 +181,7 @@ export default function Home(props) {
                 label="Custom URL"
                 id="customUrl"
                 autoComplete="customUrl"
+                onChange={updateCustomUrl}
             />
 
             <Button
