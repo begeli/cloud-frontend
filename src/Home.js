@@ -48,10 +48,7 @@ export default function Home(props) {
       axios.post("http://18.197.151.94:8080/Urls/shorten", data)    
       .then(res => {
         console.log(res);
-        if (res.status === 200) {        
-          //setAuthorization(true);
-          //props.handleSuccessfulAuth(email);
-          //history.push("/home")
+        if (res.status === 200) {       
           setShortenedUrl(redirectionUrl + res.data.hash);
         } else {
           console.log(res)
@@ -73,14 +70,14 @@ export default function Home(props) {
       axios.post("http://18.197.151.94:8080/Urls/customshorten", data, {headers: headers})    
       .then(res => {
         console.log(res);
-        if (res.status === 200) {        
+        /*if (res.status === 200) {        
           //setAuthorization(true);
           //props.handleSuccessfulAuth(email);
           //history.push("/home")
           //setShortenedUrl(redirectionUrl + res.data.hash);
         } else {
           console.log(res)
-        }
+        }*/
       })
       .catch(res => console.log("Error"));    
     }
@@ -101,7 +98,7 @@ export default function Home(props) {
     setCustomUrl(event.target.value);
     //console.log(originalUrl);
   };
-
+//<form className={classes.form} onSubmit={onFinish()} noValidate> </form>
   return (
     <div>
         <NavBar />
@@ -114,7 +111,7 @@ export default function Home(props) {
             <Typography component="h1" variant="h5">
                 Welcome {props.email}
             </Typography>
-            <form className={classes.form} onSubmit={onFinish()} noValidate>
+            
             <TextField
                 variant="outlined"
                 margin="normal"
@@ -134,6 +131,7 @@ export default function Home(props) {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={() => onFinish()}
             >
                 Shorten URL
             </Button>
@@ -149,7 +147,7 @@ export default function Home(props) {
                 autoComplete="shortenedUrl"
                 value={shortenedUrl}
             />                   
-            </form>
+            
         </div>
         </Container>
         <Container component="main" maxWidth="xs">
@@ -158,7 +156,6 @@ export default function Home(props) {
             <Typography component="h1" variant="h5">
                 Create a Custom URL
             </Typography>
-            <form className={classes.form} onSubmit={onFinishCustom()} noValidate>
             <TextField
                 variant="outlined"
                 margin="normal"
@@ -190,10 +187,10 @@ export default function Home(props) {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={() => onFinishCustom()}
             >
                 Customize URL
-            </Button>                               
-            </form>
+            </Button>  
         </div>
         </Container>
     </div>

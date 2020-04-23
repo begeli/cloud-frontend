@@ -41,7 +41,7 @@ export default function SignIn(props) {
     const data = {email:email, password:password};
     axios.post("http://18.197.151.94:8080/login", data)    
     .then(res => {
-      if (res.status === 200) {
+      if (res.status === 200) {        
         console.log("Response  ", res);
         setAuthorization(true);
         props.handleSuccessfulAuth(email);
@@ -74,9 +74,8 @@ export default function SignIn(props) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in {props.loggedInStatus}
+            Sign in 
           </Typography>
-          <form className={classes.form} onSubmit={onFinish()}noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -107,7 +106,7 @@ export default function SignIn(props) {
               fullWidth
               variant="contained"
               color="primary"
-              //onClick={() => onFinish()}
+              onClick={() => onFinish()}
               //component={Link}
               //to="/home"
               className={classes.submit}
@@ -126,7 +125,6 @@ export default function SignIn(props) {
                 </Link>
               </Grid>            
             </Grid>
-          </form>
         </div>
       </Container>
     );

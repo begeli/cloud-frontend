@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {  
+export default function SignUp(props) {  
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,6 +44,7 @@ export default function SignUp() {
     .then(res => {
       if (res.status === 200) {
         setRegistration(true);
+        props.handleSuccessfulAuth(email);
         //history.push("/home")
       } else {
         console.log(res)
@@ -66,7 +67,7 @@ export default function SignUp() {
 
   if (isRegistered) {
     return (
-      <Redirect to = '/home'  />
+        <Redirect to ={ {pathname:'/home', state: {email: email}}  } />
       );
   } else {
     return (
@@ -79,7 +80,6 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <form className={classes.form} onSubmit={() => onSubmit()} noValidate>
             <Grid container spacing={2}>            
               <Grid item xs={12}>
                 <TextField
@@ -114,6 +114,7 @@ export default function SignUp() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={()=>onSubmit()}
             >
               Sign Up
             </Button>
@@ -124,7 +125,6 @@ export default function SignUp() {
                 </Link>
               </Grid>
             </Grid>
-          </form>
         </div>
       </Container>
     );
