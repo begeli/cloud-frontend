@@ -47,7 +47,7 @@ export default function SignIn(props) {
         props.handleSuccessfulAuth(email);
         //history.push("/home")
       } else {
-        console.log(res)
+        console.log(res);
       }
     })
     .catch(res => console.log("Error"));

@@ -21,6 +21,7 @@ export default class  App extends Component {
     this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
   }
 
+  // Method name should change... I use it both in the sign up and the sign in
   handleSuccessfulAuth(data) {
     this.setState({
       loggedInStatus: "LOGGED_IN",
@@ -63,7 +64,10 @@ export default class  App extends Component {
             />
             <Route 
               exact path="/signup" 
-              component={SignUp} 
+              render={ props => (
+                <SignUp {...props} handleSuccessfulAuth={this.handleSuccessfulAuth} />
+              )}
+              //component={SignUp} 
             />
             <Route 
               exact path="/home" 

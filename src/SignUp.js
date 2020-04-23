@@ -42,15 +42,17 @@ export default function SignUp(props) {
     const data = {email:email, password:password};
     axios.post("http://18.197.151.94:8080/registration", data)    
     .then(res => {
+      //props.handleSuccessfulReg(email);
       if (res.status === 200) {
-        setRegistration(true);
+        console.log("Response  ", res);        
+        setRegistration(true);        
         props.handleSuccessfulAuth(email);
         //history.push("/home")
       } else {
-        console.log(res)
+        console.log(res);
       }
     })
-    .catch(res => console.log("Error in sign up"));
+    .catch(res => console.log("Error in sign up " + res));
 
     //.then(res => res.json());
     //console.log( 'Hello MF');     
