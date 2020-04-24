@@ -11,6 +11,10 @@ import { Link }  from "react-router-dom";
 import NavBar from './NavBar';
 import axios from "axios";
 import moment from 'moment';
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker} from '@material-ui/pickers';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,11 +43,23 @@ export default function Home(props) {
   const [customUrl, setCustomUrl] = useState("");
   const [shortenedUrl, setShortenedUrl] = useState("");
   const redirectionUrl = "http://18.197.151.94:8080/Urls/";//http://localhost:3000/";  
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate4Custom, setSelectedDate4Custom] = useState(new Date());
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    console.log("Selected date is " + date);
+  };
+
+  const handleDateChange4Custom = (date) => {
+    setSelectedDate4Custom(date);
+    console.log("Selected date is " + date);
+  };
 
   const onFinish = () =>  {
     if (originalUrl !== "") {
       console.log("Regular url shortener");
-      const data = {_id: null, URL:originalUrl, hash:"", userMail:props.email, date:moment().format("YYYY-MM-DD")};
+      const data = {_id: null, URL:originalUrl, hash:"", userMail:props.email, date:selectedDate};
       console.log(data);
       axios.post("http://18.197.151.94:8080/Urls/shorten", data)    
       .then(res => {
@@ -125,6 +141,35 @@ export default function Home(props) {
                 onChange={updateOriginalUrl}
             />
 
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <Grid container justify="space-around">
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="yyyy-MM-dd"
+                  margin="normal"
+                  id="date-picker-inline"
+                  label="Select expiration date"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
+                /> 
+
+                <KeyboardTimePicker
+                  margin="normal"
+                  id="time-picker"
+                  label="Select expiration time"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change time',
+                  }}
+                />
+              </Grid>
+            </MuiPickersUtilsProvider>
+
             <Button
                 type="submit"
                 fullWidth
@@ -180,6 +225,35 @@ export default function Home(props) {
                 autoComplete="customUrl"
                 onChange={updateCustomUrl}
             />
+
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <Grid container justify="space-around">
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="yyyy-MM-dd"
+                  margin="normal"
+                  id="date-picker-inline"
+                  label="Select expiration date"
+                  value={selectedDate4Custom}
+                  onChange={handleDateChange4Custom}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
+                /> 
+
+                <KeyboardTimePicker
+                  margin="normal"
+                  id="time-picker"
+                  label="Select expiration time"
+                  value={selectedDate4Custom}
+                  onChange={handleDateChange4Custom}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change time',
+                  }}
+                />
+              </Grid>
+            </MuiPickersUtilsProvider>
 
             <Button
                 type="submit"
