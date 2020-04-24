@@ -84,6 +84,7 @@ export default function LinkAnalytics(props) {
       .catch(res => console.log(res));          
     }
     //onClick={onFinish()}
+    //<Button onClick={() => onFinish()}>Button Here {props.email}</Button>
     if (dataUpdated) {
       return(        
         <div style={{display: 'table', tableLayout:'fixed', width:'100%'}}>
@@ -101,7 +102,7 @@ export default function LinkAnalytics(props) {
       return (
         <div>
             <NavBar />
-            <Button onClick={() => onFinish()}>Button Here {props.email}</Button>
+            {onFinish()}
             <div style={{display: 'table', tableLayout:'fixed', width:'100%'}}>
                         <MUIDataTable
                         title={"Link Analytics"}
@@ -110,13 +111,6 @@ export default function LinkAnalytics(props) {
                         columns={columns}
                         options={options}
                         />
-            </div>
-            <div>
-                <Grid item xs={12} md={8} lg={9}>
-                <Paper className={fixedHeightPaper}>
-                    <Chart />
-                </Paper>
-                </Grid>
             </div>
         </div>        
       );
