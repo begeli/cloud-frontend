@@ -114,11 +114,6 @@ export default function SignIn(props) {
               Sign In
             </Button>
             <Grid container>
-            <Grid item xs>
-                <Link to="/asignin" variant="body2">
-                  {"Go to Admins' Page"}
-                </Link>
-              </Grid>
               <Grid item>
                 <Link to="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
