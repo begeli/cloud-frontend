@@ -52,7 +52,6 @@ export default class  App extends Component {
                   <SignIn {...props} handleSuccessfulAuth={this.handleSuccessfulAuth} loggedInStatus={this.state.loggedInStatus}/>
                 )
               }
-              //component={SignIn} 
             />
             <Route 
               exact path="/signin" 
@@ -60,14 +59,12 @@ export default class  App extends Component {
                   <SignIn {...props} handleSuccessfulAuth={this.handleSuccessfulAuth} loggedInStatus={this.state.loggedInStatus}/>
                 )
               }
-              //component={SignIn} 
             />
             <Route 
               exact path="/signup" 
               render={ props => (
                 <SignUp {...props} handleSuccessfulAuth={this.handleSuccessfulAuth} />
               )}
-              //component={SignUp} 
             />
             <Route 
               exact path="/home" 
@@ -75,7 +72,6 @@ export default class  App extends Component {
                   <Home email={this.state.email}/>
                 )
               }
-              //component={Home} 
             />
             <Route 
               exact path="/analytics" 
@@ -83,7 +79,6 @@ export default class  App extends Component {
                 <LinkAnalytics email={this.state.email} />
                )
               }
-              //component={LinkAnalytics} 
             />
           </Switch>
         </Router>

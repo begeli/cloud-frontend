@@ -45,7 +45,6 @@ export default function SignIn(props) {
         console.log("Response  ", res);
         setAuthorization(true);
         props.handleSuccessfulAuth(email);
-        //history.push("/home")
       } else {
         console.log(res);
       }
@@ -107,8 +106,6 @@ export default function SignIn(props) {
               variant="contained"
               color="primary"
               onClick={() => onFinish()}
-              //component={Link}
-              //to="/home"
               className={classes.submit}
             >
               Sign In

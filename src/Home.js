@@ -42,7 +42,7 @@ export default function Home(props) {
   const [originalUrl4Custom, setOrginal4Custom] = useState("");
   const [customUrl, setCustomUrl] = useState("");
   const [shortenedUrl, setShortenedUrl] = useState("");
-  const redirectionUrl = "http://18.197.151.94:8080/Urls/";//http://localhost:3000/";  
+  const redirectionUrl = "http://18.197.151.94:8080/Urls/";
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedDate4Custom, setSelectedDate4Custom] = useState(new Date());
 
@@ -86,14 +86,6 @@ export default function Home(props) {
       axios.post("http://18.197.151.94:8080/Urls/customshorten", data, {headers: headers})    
       .then(res => {
         console.log(res);
-        /*if (res.status === 200) {        
-          //setAuthorization(true);
-          //props.handleSuccessfulAuth(email);
-          //history.push("/home")
-          //setShortenedUrl(redirectionUrl + res.data.hash);
-        } else {
-          console.log(res)
-        }*/
       })
       .catch(res => console.log("Error"));    
     }
@@ -102,19 +94,16 @@ export default function Home(props) {
 
   const updateOriginalUrl = (event) => {    
     setOriginalUrl(event.target.value);
-    //console.log(originalUrl);
   };
   
   const updateOriginalUrl4Custom = (event) => {    
     setOrginal4Custom(event.target.value);
-    //console.log(originalUrl);
   };
 
   const updateCustomUrl = (event) => {    
     setCustomUrl(event.target.value);
-    //console.log(originalUrl);
   };
-//<form className={classes.form} onSubmit={onFinish()} noValidate> </form>
+  
   return (
     <div>
         <NavBar />
