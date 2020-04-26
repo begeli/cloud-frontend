@@ -4,7 +4,7 @@ import NavBar from './NavBar';
 import axios from "axios";
 
 export default function LinkAnalytics(props) {
-    const columns = ["Full URL", "Shortened URL", "Number of Clicks"];
+    const columns = ["Full URL", "Shortened URL", "Number of Clicks", "Expiration Date"];
     const [dataUpdated, setDataUpdated] = useState(false);
     const [table_data, setTableData] = useState([]);
     const options = {
@@ -27,7 +27,7 @@ export default function LinkAnalytics(props) {
           var i;
           const data = [];
           for (i = 0; i < res.data.length; i++) {
-            const table_row = [res.data[i].URL, "http://18.197.151.94:8080/Urls/" + res.data[i].hash, res.data[i].noOfClick];
+            const table_row = [res.data[i].URL, "http://18.197.151.94:8080/Urls/" + res.data[i].hash, res.data[i].noOfClick, res.data[i].date];
             data.push(table_row);            
           }
           console.log("data is " + data);

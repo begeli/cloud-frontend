@@ -42,25 +42,36 @@ export default function Home(props) {
   const [originalUrl4Custom, setOrginal4Custom] = useState("");
   const [customUrl, setCustomUrl] = useState("");
   const [shortenedUrl, setShortenedUrl] = useState("");
+  const [customShortenedUrl, setCustomShortenedUrl] = useState("");
   const redirectionUrl = "http://18.197.151.94:8080/Urls/";
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedDate4Custom, setSelectedDate4Custom] = useState(new Date());
+  const [selectedDate4Custom, setSelectedDate4Custom] = useState(new Date);
+
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
+  }
 
   const handleDateChange = (date) => {
+    var dateString = convert(date.toString());
     setSelectedDate(date);
-    console.log("Selected date is " + date);
+    console.log("Selected date is " + dateString);
   };
 
   const handleDateChange4Custom = (date) => {
+    var dateString = convert(date.toString());
     setSelectedDate4Custom(date);
-    console.log("Selected date is " + date);
+    console.log("Selected date is " + dateString);
   };
 
   const onFinish = () =>  {
     if (originalUrl !== "") {
       console.log("Regular url shortener");
-      const data = {_id: null, URL:originalUrl, hash:"", userMail:props.email, date:selectedDate};
+      const data = {_id: null, URL:originalUrl, hash:"", userMail:props.email, date:convert(selectedDate.toString())};
       console.log(data);
+      
       axios.post("http://18.197.151.94:8080/Urls/shorten", data)    
       .then(res => {
         console.log(res);
@@ -81,11 +92,16 @@ export default function Home(props) {
       const headers = {
         "hash":customUrl
       }
-      const data = {_id: null, URL:originalUrl4Custom, hash:customUrl, userMail:props.email, date:moment().format("YYYY-MM-DD")};
+      const data = {_id: null, URL:originalUrl4Custom, hash:customUrl, userMail:props.email, date:convert(selectedDate4Custom.toString())};
       console.log(data);
       axios.post("http://18.197.151.94:8080/Urls/customshorten", data, {headers: headers})    
       .then(res => {
         console.log(res);
+        if (res.status === 200) {       
+          setCustomShortenedUrl(redirectionUrl + res.data.hash);
+        } else {
+          console.log(res)
+        }
       })
       .catch(res => console.log("Error"));    
     }
@@ -145,17 +161,6 @@ export default function Home(props) {
                     'aria-label': 'change date',
                   }}
                 /> 
-
-                <KeyboardTimePicker
-                  margin="normal"
-                  id="time-picker"
-                  label="Select expiration time"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                  }}
-                />
               </Grid>
             </MuiPickersUtilsProvider>
 
@@ -230,17 +235,6 @@ export default function Home(props) {
                     'aria-label': 'change date',
                   }}
                 /> 
-
-                <KeyboardTimePicker
-                  margin="normal"
-                  id="time-picker"
-                  label="Select expiration time"
-                  value={selectedDate4Custom}
-                  onChange={handleDateChange4Custom}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                  }}
-                />
               </Grid>
             </MuiPickersUtilsProvider>
 
@@ -253,7 +247,19 @@ export default function Home(props) {
                 onClick={() => onFinishCustom()}
             >
                 Customize URL
-            </Button>  
+            </Button> 
+
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="customShortenedUrl"
+                label="Custom Shortened URL"
+                id="customShortenedUrl"
+                autoComplete="customShortenedUrl"
+                value={customShortenedUrl}
+            />     
         </div>
         </Container>
     </div>
