@@ -33,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp(props) {  
+  const registrationAPIURL = "http://18.197.151.94:8080/registration";
+
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,7 +42,7 @@ export default function SignUp(props) {
 
   const onSubmit = () =>  {
     const data = {email:email, password:password};
-    axios.post("http://18.197.151.94:8080/registration", data)    
+    axios.post(registrationAPIURL, data)    
     .then(res => {
       if (res.status === 200) {
         console.log("Response  ", res);        

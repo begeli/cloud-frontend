@@ -32,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn(props) {
+  const loginAPIURL = "http://18.197.151.94:8080/login";
+
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +41,7 @@ export default function SignIn(props) {
 
   const onFinish = () =>  {
     const data = {email:email, password:password};
-    axios.post("http://18.197.151.94:8080/login", data)    
+    axios.post(loginAPIURL, data)    
     .then(res => {
       if (res.status === 200) {        
         console.log("Response  ", res);

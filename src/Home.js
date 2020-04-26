@@ -37,13 +37,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Home(props) {
+  const redirectionUrl = "http://18.197.151.94:8080/Urls/";
+  const urlShorteningAPIURL = "http://18.197.151.94:8080/Urls/shorten";
+  const customUrlShorteningAPIURL = "http://18.197.151.94:8080/Urls/customshorten";
+
   const classes = useStyles();
   const [originalUrl, setOriginalUrl] = useState("");
   const [originalUrl4Custom, setOrginal4Custom] = useState("");
   const [customUrl, setCustomUrl] = useState("");
   const [shortenedUrl, setShortenedUrl] = useState("");
-  const [customShortenedUrl, setCustomShortenedUrl] = useState("");
-  const redirectionUrl = "http://18.197.151.94:8080/Urls/";
+  const [customShortenedUrl, setCustomShortenedUrl] = useState("");  
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedDate4Custom, setSelectedDate4Custom] = useState(new Date);
 
@@ -72,7 +75,7 @@ export default function Home(props) {
       const data = {_id: null, URL:originalUrl, hash:"", userMail:props.email, date:convert(selectedDate.toString())};
       console.log(data);
       
-      axios.post("http://18.197.151.94:8080/Urls/shorten", data)    
+      axios.post(urlShorteningAPIURL, data)    
       .then(res => {
         console.log(res);
         if (res.status === 200) {       
@@ -94,7 +97,7 @@ export default function Home(props) {
       }
       const data = {_id: null, URL:originalUrl4Custom, hash:customUrl, userMail:props.email, date:convert(selectedDate4Custom.toString())};
       console.log(data);
-      axios.post("http://18.197.151.94:8080/Urls/customshorten", data, {headers: headers})    
+      axios.post(customUrlShorteningAPIURL, data, {headers: headers})    
       .then(res => {
         console.log(res);
         if (res.status === 200) {       
