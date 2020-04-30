@@ -35,10 +35,43 @@ export default function AdminHome(props) {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const urlCreationAnalyticURL = "http://18.196.128.47:8080/Urls/lastMonthsUrlCreationAnalytics";
+  const redirectionAnalyticsURL = "http://18.196.128.47:8080/Urls/lastMonthsRedirectionAnalytics";
+  const userLinkAnalyticsURL = "http://18.196.128.47:8080/Urls/lastMonthsUserLinkAnalytics";
 
   const urlCreation = () => {
-    const headers = {"admin": props.email};
-    axios.get(urlCreationAnalyticURL, {userEmail: "admin", password: "pass"}, {headers: headers})    
+    const headers = {"admin": "admin"};
+    const data = {email: "admin", password:"pass"};
+    axios.post(urlCreationAnalyticURL, data, {headers: headers})    // CHANGE HERE
+      .then(res => {
+        console.log(res);
+        if (res.status === 200) {       
+          //setShortenedUrl(redirectionUrl + res.data.hash);
+        } else {
+          console.log(res)
+        }
+      })
+      .catch(res => console.log(res));
+  }
+
+  const redirectionAnalytics = () => {
+    const headers = {"admin": "admin"};
+    const data = {email: "admin", password:"pass"};
+    axios.post(redirectionAnalyticsURL, data)    // CHANGE HERE
+      .then(res => {
+        console.log(res);
+        if (res.status === 200) {       
+          //setShortenedUrl(redirectionUrl + res.data.hash);
+        } else {
+          console.log(res)
+        }
+      })
+      .catch(res => console.log(res));
+  }
+
+  const userLinkAnalytics = () => {
+    const headers = {"admin": "admin"};
+    const data = {email: "admin", password:"pass"};
+    axios.post(userLinkAnalyticsURL, data, {headers: headers})    // CHANGE HERE
       .then(res => {
         console.log(res);
         if (res.status === 200) {       
@@ -77,6 +110,7 @@ export default function AdminHome(props) {
             fullWidth
             variant="contained"
             color="primary"
+            onClick={() => redirectionAnalytics()}
             //onClick={() => onFinish()}
             //component={Link}
             //to="/ahome"
@@ -90,6 +124,7 @@ export default function AdminHome(props) {
             fullWidth
             variant="contained"
             color="primary"
+            onClick={() => userLinkAnalytics()}
             //onClick={() => onFinish()}
             //component={Link}
             //to="/ahome"
