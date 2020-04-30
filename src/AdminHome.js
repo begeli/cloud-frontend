@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link}  from "react-router-dom";
 import NavBar from './NavBar';
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -30,15 +31,74 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AdminHome() {
+export default function AdminHome(props) {
   const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const urlCreationAnalyticURL = "http://18.196.128.47:8080/Urls/lastMonthsUrlCreationAnalytics";
+
+  const urlCreation = () => {
+    const headers = {"admin": props.email};
+    axios.get(urlCreationAnalyticURL, {userEmail: "admin", password: "pass"}, {headers: headers})    
+      .then(res => {
+        console.log(res);
+        if (res.status === 200) {       
+          //setShortenedUrl(redirectionUrl + res.data.hash);
+        } else {
+          console.log(res)
+        }
+      })
+      .catch(res => console.log(res));
+  }
 
   return (
     <div>
-        <Typography component="h1" variant="h5">
-                Admin page - under construction
-        </Typography>
-        
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
+                  Admin page - under construction {props.email}
+          </Typography>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={() => urlCreation()}
+            //component={Link}
+            //to="/ahome"
+            className={classes.submit}
+          >
+            URL Creation
+          </Button>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            //onClick={() => onFinish()}
+            //component={Link}
+            //to="/ahome"
+            className={classes.submit}
+          >
+            Button 2
+          </Button>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            //onClick={() => onFinish()}
+            //component={Link}
+            //to="/ahome"
+            className={classes.submit}
+          >
+            Button 3
+          </Button>
+        </div>
+      </Container>              
     </div>
     
   );

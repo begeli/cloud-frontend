@@ -37,9 +37,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Home(props) {
-  const redirectionUrl = "http://18.197.151.94:8080/Urls/";
-  const urlShorteningAPIURL = "http://18.197.151.94:8080/Urls/shorten";
-  const customUrlShorteningAPIURL = "http://18.197.151.94:8080/Urls/customshorten";
+  const redirectionUrl = "http://18.196.128.47:8080/Urls/";
+  const urlShorteningAPIURL = "http://18.196.128.47:8080/Urls/shorten";
+  const customUrlShorteningAPIURL = "http://18.196.128.47:8080/Urls/customshorten";
 
   const classes = useStyles();
   const [originalUrl, setOriginalUrl] = useState("");

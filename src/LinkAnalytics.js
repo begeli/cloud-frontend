@@ -4,8 +4,8 @@ import NavBar from './NavBar';
 import axios from "axios";
 
 export default function LinkAnalytics(props) {
-    const userURLsAPIURL = "http://18.197.151.94:8080/Urls/userURL";
-    const redirectionAPIURL = "http://18.197.151.94:8080/Urls/";
+    const userURLsAPIURL = "http://18.196.128.47:8080/Urls/userURL";
+    const redirectionAPIURL = "http://18.196.128.47:8080/Urls/";
     
     const columns = ["Full URL", "Shortened URL", "Number of Clicks", "Expiration Date"];
     const [dataUpdated, setDataUpdated] = useState(false);

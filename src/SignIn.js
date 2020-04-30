@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn(props) {
-  const loginAPIURL = "http://18.197.151.94:8080/login";
+  //const loginAPIURL = "http://18.197.151.94:8080/login";
+  const loginAPIURL = "http://18.196.128.47:8080/login";
 
   const classes = useStyles();
   const [email, setEmail] = useState("");
@@ -51,7 +52,7 @@ export default function SignIn(props) {
         console.log(res);
       }
     })
-    .catch(res => console.log("Error"));
+    .catch(res => console.log(res));
   }
 
   const updateEmail = (event) => {
@@ -113,6 +114,12 @@ export default function SignIn(props) {
               Sign In
             </Button>
             <Grid container>
+              <Grid item xs>
+                <Link to="/asignin" variant="body2">
+                  {"Admin Sign In"}
+                </Link>
+              </Grid>  
+
               <Grid item>
                 <Link to="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}

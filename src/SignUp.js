@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp(props) {  
-  const registrationAPIURL = "http://18.197.151.94:8080/registration";
+  //const registrationAPIURL = "http://18.197.151.94:8080/registration";
+  const registrationAPIURL = "http://18.196.128.47:8080/registration";
 
   const classes = useStyles();
   const [email, setEmail] = useState("");

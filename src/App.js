@@ -40,11 +40,19 @@ export default class  App extends Component {
             />
             <Route 
               exact path="/asignin" 
-              component={AdminSignIn} 
+              render={props => (
+                  <AdminSignIn {...props} handleSuccessfulAuth={this.handleSuccessfulAuth} loggedInStatus={this.state.loggedInStatus}/>
+                )
+              }
+              //component={AdminSignIn} 
             />
             <Route 
               exact path="/ahome" 
-              component={AdminHome} 
+              render={props => (
+                  <AdminHome email={this.state.email}/>
+                )
+              }
+              //component={AdminHome} 
             />
             <Route 
               exact path="/" 
