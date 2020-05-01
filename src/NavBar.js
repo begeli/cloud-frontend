@@ -18,21 +18,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar() {
+export default function NavBar(props) {
   const classes = useStyles();
 
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            URL Shortener
-          </Typography>
-          <Button component={ Link } to='/home' color="inherit">Home</Button>
-          <Button component={ Link } to='/analytics' color="inherit">Link Analytics</Button>
-          <Button component={ Link } to='/signin' color="inherit">Sign Out</Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+  if (props.page === "admin") {
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" className={classes.title}>
+              Admin Page
+            </Typography>
+            <Button component={ Link } to='/asignin' color="inherit">Sign Out</Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  } else {
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" className={classes.title}>
+              URL Shortener
+            </Typography>
+            <Button component={ Link } to='/home' color="inherit">Home</Button>
+            <Button component={ Link } to='/analytics' color="inherit">Link Analytics</Button>
+            <Button component={ Link } to='/signin' color="inherit">Sign Out</Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }  
 }

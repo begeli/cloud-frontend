@@ -4,26 +4,34 @@ import Typography from '@material-ui/core/Typography';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 
 // Generate Sales Data
-function createData(time, amount) {
-  return { time, amount };
-}
 
-const data = [
-  createData('11/04/2020', 0),
-  createData('12/04/2020', 3),
-  createData('13/04/2020', 6),
-  createData('14/04/2020', 4),
-  createData('15/04/2020', 7),
-  createData('16/04/2020', 10),
-];
 
-export default function Chart() {
+export default function Chart(props) {
   const theme = useTheme();
+
+  const createData = (time, amount) => {
+    return { time, amount };
+  }  
+
+  const returnData = () => {
+    const chartData = []
+    var i;
+    for (i = 0; i < props.xAxisData.length; i++) {
+      console.log(createData(props.xAxisData[i], props.yAxisData[i]));
+      chartData.push(createData(props.xAxisData[i], props.yAxisData[i]));
+    }
+
+    console.log("Chart data is " + chartData);
+    return chartData;
+  }
+
+  const data = returnData();
 
   return (
     <React.Fragment>
+        {console.log(data)}
         <Typography component="h2" variant="h6" color="primary" gutterBottom>
-            Number of Clicks per Day
+            {props.title}
         </Typography>
       <ResponsiveContainer>
         <LineChart
@@ -42,7 +50,7 @@ export default function Chart() {
               position="left"
               style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
             >
-              Clicks
+              {props.yAxisLabel}
             </Label>
           </YAxis>
           <Line type="monotone" dataKey="amount" stroke={theme.palette.primary.main} dot={false} />

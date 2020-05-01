@@ -10,6 +10,11 @@ import Container from '@material-ui/core/Container';
 import { Link}  from "react-router-dom";
 import NavBar from './NavBar';
 import axios from "axios";
+import moment from 'moment';
+import Chart from './Chart';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,11 +34,25 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
+  fixedHeight: {
+    height: 240,
+  },
 }));
 
 export default function AdminHome(props) {
   const classes = useStyles();
   const [email, setEmail] = useState("");
+  const [redirectionDataUpdated, setRedirectionDataUpdated] = useState(false);
+  const [redirectionAnalyticsChartData, setRedirectionAnalyticsData] = useState([]);
+  
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
   const urlCreationAnalyticURL = "http://18.196.128.47:8080/Urls/lastMonthsUrlCreationAnalytics";
   const redirectionAnalyticsURL = "http://18.196.128.47:8080/Urls/lastMonthsRedirectionAnalytics";
   const userLinkAnalyticsURL = "http://18.196.128.47:8080/Urls/lastMonthsUserLinkAnalytics";
@@ -60,7 +79,8 @@ export default function AdminHome(props) {
       .then(res => {
         console.log(res);
         if (res.status === 200) {       
-          //setShortenedUrl(redirectionUrl + res.data.hash);
+          setRedirectionAnalyticsData(res.data.reverse());
+          setRedirectionDataUpdated(true);  
         } else {
           console.log(res)
         }
@@ -68,6 +88,22 @@ export default function AdminHome(props) {
       .catch(res => console.log(res));
   }
 
+  const pastXMonths = (noOfMonths) => {
+    var monthName = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+    var d = new Date();
+    d.setDate(1);
+    var expectedLength = noOfMonths;
+    var monthsArray = new Array(expectedLength);
+    var i;
+    for (i=0; i<expectedLength; i++) {
+        monthsArray[(monthsArray.length - i - 1) % expectedLength] = monthName[d.getMonth()] + ' ' + d.getFullYear()
+        d.setMonth(d.getMonth() - 1);
+    }
+    return monthsArray;
+  }
+
+  const past12Months = pastXMonths(12);
+  
   const userLinkAnalytics = () => {
     const headers = {"admin": "admin"};
     const data = {email: "admin", password:"pass"};
@@ -83,58 +119,101 @@ export default function AdminHome(props) {
       .catch(res => console.log(res));
   }
 
-  return (
-    <div>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
-                  Admin page - under construction {props.email}
-          </Typography>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={() => urlCreation()}
-            //component={Link}
-            //to="/ahome"
-            className={classes.submit}
-          >
-            URL Creation
-          </Button>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={() => redirectionAnalytics()}
-            //onClick={() => onFinish()}
-            //component={Link}
-            //to="/ahome"
-            className={classes.submit}
-          >
-            Button 2
-          </Button>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={() => userLinkAnalytics()}
-            //onClick={() => onFinish()}
-            //component={Link}
-            //to="/ahome"
-            className={classes.submit}
-          >
-            Button 3
-          </Button>
-        </div>
-      </Container>              
-    </div>
-    
-  );
+  if (redirectionDataUpdated) {
+    return(
+      <div>
+        <NavBar page={"admin"}/>
+        <Container component="main" maxWidth="md">
+          <Grid container spacing={5}>
+            <Grid item xs={12} md={8} lg={9} spacing={3}>
+              <Paper className={fixedHeightPaper}>
+                <Chart 
+                  title={"Monthly User Creation Analytics"} 
+                  yAxisLable={"Monthly User Creation"} 
+                  xAxisData={past12Months}
+                  yAxisData={redirectionAnalyticsChartData}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={8} lg={9} spacing={3}>
+              <Paper className={fixedHeightPaper}>
+                <Chart 
+                  title={"Monthly Redirection Analytics"} 
+                  yAxisLable={"Monthly Redirections"} 
+                  xAxisData={past12Months}
+                  yAxisData={redirectionAnalyticsChartData}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={8} lg={9} spacing={3}>
+              <Paper className={fixedHeightPaper}>
+                <Chart 
+                  title={"Monthly URL Creation Analytics"} 
+                  yAxisLable={"Monthly User Creation"} 
+                  xAxisData={past12Months}
+                  yAxisData={redirectionAnalyticsChartData}
+                />
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>                
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <NavBar page={"admin"}/>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Typography component="h1" variant="h5">
+                    Admin page - under construction {props.email}
+            </Typography>
+  
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={() => urlCreation()}
+              //component={Link}
+              //to="/ahome"
+              className={classes.submit}
+            >
+              URL Creation
+            </Button>
+  
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={() => redirectionAnalytics()}
+              //onClick={() => onFinish()}
+              //component={Link}
+              //to="/ahome"
+              className={classes.submit}
+            >
+              Button 2
+            </Button>
+  
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={() => userLinkAnalytics()}
+              //onClick={() => onFinish()}
+              //component={Link}
+              //to="/ahome"
+              className={classes.submit}
+            >
+              Button 3
+            </Button>
+          </div>
+        </Container>              
+      </div>      
+    );
+  }
+  
 }
