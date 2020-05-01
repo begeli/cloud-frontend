@@ -48,9 +48,16 @@ const useStyles = makeStyles((theme) => ({
 export default function AdminHome(props) {
   const classes = useStyles();
   const [email, setEmail] = useState("");
+
+  const [userCreationDataUpdated, setUserCreationDataUpdated] = useState(false); // probably unnecessary
+  const [userCreationAnalyticsChartData, setUserCreationAnalyticsData] = useState([]);
+
   const [redirectionDataUpdated, setRedirectionDataUpdated] = useState(false);
   const [redirectionAnalyticsChartData, setRedirectionAnalyticsData] = useState([]);
   
+  const [urlCreationDataUpdated, setUrlCreationDataUpdated] = useState(false);
+  const [urlCreationAnalyticsChartData, setUrlCreationAnalyticsData] = useState([]);
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const urlCreationAnalyticURL = "http://18.196.128.47:8080/Urls/lastMonthsUrlCreationAnalytics";
@@ -65,6 +72,8 @@ export default function AdminHome(props) {
         console.log(res);
         if (res.status === 200) {       
           //setShortenedUrl(redirectionUrl + res.data.hash);
+          setUrlCreationAnalyticsData(res.data.reverse());
+          setUrlCreationDataUpdated(true);
         } else {
           console.log(res)
         }
@@ -119,7 +128,7 @@ export default function AdminHome(props) {
       .catch(res => console.log(res));
   }
 
-  if (redirectionDataUpdated) {
+  if (redirectionDataUpdated && urlCreationDataUpdated) {
     return(
       <div>
         <NavBar page={"admin"}/>
@@ -128,10 +137,10 @@ export default function AdminHome(props) {
             <Grid item xs={12} md={8} lg={9} spacing={3}>
               <Paper className={fixedHeightPaper}>
                 <Chart 
-                  title={"Monthly User Creation Analytics"} 
-                  yAxisLable={"Monthly User Creation"} 
+                  title={"Monthly URL Creation Analytics"} 
+                  yAxisLable={"Monthly URL Creation"} 
                   xAxisData={past12Months}
-                  yAxisData={redirectionAnalyticsChartData}
+                  yAxisData={urlCreationAnalyticsChartData}
                 />
               </Paper>
             </Grid>
@@ -144,17 +153,21 @@ export default function AdminHome(props) {
                   yAxisData={redirectionAnalyticsChartData}
                 />
               </Paper>
-            </Grid>
-            <Grid item xs={12} md={8} lg={9} spacing={3}>
-              <Paper className={fixedHeightPaper}>
-                <Chart 
-                  title={"Monthly URL Creation Analytics"} 
-                  yAxisLable={"Monthly User Creation"} 
-                  xAxisData={past12Months}
-                  yAxisData={redirectionAnalyticsChartData}
-                />
-              </Paper>
-            </Grid>
+            </Grid> 
+            {
+              /*
+                <Grid item xs={12} md={8} lg={9} spacing={3}>
+                  <Paper className={fixedHeightPaper}>
+                    <Chart 
+                      title={"Monthly URL Creation Analytics"} 
+                      yAxisLable={"Monthly User Creation"} 
+                      xAxisData={past12Months}
+                      yAxisData={redirectionAnalyticsChartData}
+                    />
+                  </Paper>
+                </Grid>
+              */
+            }            
           </Grid>
         </Container>                
       </div>
@@ -163,53 +176,59 @@ export default function AdminHome(props) {
     return (
       <div>
         <NavBar page={"admin"}/>
+        {urlCreation()}
+        {redirectionAnalytics()}
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
             <Typography component="h1" variant="h5">
-                    Admin page - under construction {props.email}
+                    Admin page - Analytics are loading...
             </Typography>
-  
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={() => urlCreation()}
-              //component={Link}
-              //to="/ahome"
-              className={classes.submit}
-            >
-              URL Creation
-            </Button>
-  
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={() => redirectionAnalytics()}
-              //onClick={() => onFinish()}
-              //component={Link}
-              //to="/ahome"
-              className={classes.submit}
-            >
-              Button 2
-            </Button>
-  
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={() => userLinkAnalytics()}
-              //onClick={() => onFinish()}
-              //component={Link}
-              //to="/ahome"
-              className={classes.submit}
-            >
-              Button 3
-            </Button>
+            {
+              /*
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={() => urlCreation()}
+                  //component={Link}
+                  //to="/ahome"
+                  className={classes.submit}
+                >
+                  URL Creation
+                </Button>
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={() => redirectionAnalytics()}
+                  //onClick={() => onFinish()}
+                  //component={Link}
+                  //to="/ahome"
+                  className={classes.submit}
+                >
+                  Button 2
+                </Button>
+      
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={() => userLinkAnalytics()}
+                  //onClick={() => onFinish()}
+                  //component={Link}
+                  //to="/ahome"
+                  className={classes.submit}
+                >
+                  Button 3
+                </Button>
+                
+              */
+            }
           </div>
         </Container>              
       </div>      
