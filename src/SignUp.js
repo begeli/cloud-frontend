@@ -9,7 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { BrowserRouter as Router, Switch, Route, useHistory, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp(props) {  
-  //const registrationAPIURL = "http://18.197.151.94:8080/registration";
   const registrationAPIURL = "http://18.196.128.47:8080/registration";
 
   const classes = useStyles();
@@ -48,7 +47,7 @@ export default function SignUp(props) {
       if (res.status === 200) {
         console.log("Response  ", res);        
         setRegistration(true);        
-        props.handleSuccessfulAuth(email);
+        props.handleSuccessfulAuth(email, password);
       } else {
         console.log(res);
       }

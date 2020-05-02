@@ -47,7 +47,7 @@ export default function SignIn(props) {
       if (res.status === 200) {        
         console.log("Response  ", res);
         setAuthorization(true);
-        props.handleSuccessfulAuth(email);
+        props.handleSuccessfulAuth(email, password);
       } else {
         console.log(res);
       }

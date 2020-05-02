@@ -15,17 +15,19 @@ export default class  App extends Component {
 
     this.state = {
       loggedInStatus: "NOT_LOGGED_IN",
-      email: ""
+      email: "",
+      password: ""
     }
 
     this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
   }
 
   // Method name should change... I use it both in the sign up and the sign in
-  handleSuccessfulAuth(data) {
+  handleSuccessfulAuth(email, password) {
     this.setState({
       loggedInStatus: "LOGGED_IN",
-      email: data     
+      email: email,
+      password: password     
     })
   }
 
@@ -52,7 +54,6 @@ export default class  App extends Component {
                   <AdminHome email={this.state.email}/>
                 )
               }
-              //component={AdminHome} 
             />
             <Route 
               exact path="/" 
@@ -84,7 +85,7 @@ export default class  App extends Component {
             <Route 
               exact path="/analytics" 
               render={ props => ( 
-                <LinkAnalytics email={this.state.email} />
+                <LinkAnalytics email={this.state.email} password={this.state.password}/>
                )
               }
             />

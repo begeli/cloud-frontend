@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import LinkIcon from '@material-ui/icons/Link';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Link}  from "react-router-dom";
 import NavBar from './NavBar';
 import axios from "axios";
-import moment from 'moment';
 import Chart from './Chart';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -28,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -47,10 +41,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AdminHome(props) {
   const classes = useStyles();
-  const [email, setEmail] = useState("");
-
-  const [userCreationDataUpdated, setUserCreationDataUpdated] = useState(false); // probably unnecessary
-  const [userCreationAnalyticsChartData, setUserCreationAnalyticsData] = useState([]);
 
   const [redirectionDataUpdated, setRedirectionDataUpdated] = useState(false);
   const [redirectionAnalyticsChartData, setRedirectionAnalyticsData] = useState([]);
@@ -65,13 +55,12 @@ export default function AdminHome(props) {
   const userLinkAnalyticsURL = "http://18.196.128.47:8080/Urls/lastMonthsUserLinkAnalytics";
 
   const urlCreation = () => {
-    const headers = {"admin": "admin"};
+    const headers = {user: "admin"};
     const data = {email: "admin", password:"pass"};
-    axios.post(urlCreationAnalyticURL, data, {headers: headers})    // CHANGE HERE
+    axios.get(urlCreationAnalyticURL, {headers: headers})
       .then(res => {
         console.log(res);
         if (res.status === 200) {       
-          //setShortenedUrl(redirectionUrl + res.data.hash);
           setUrlCreationAnalyticsData(res.data.reverse());
           setUrlCreationDataUpdated(true);
         } else {
@@ -82,9 +71,9 @@ export default function AdminHome(props) {
   }
 
   const redirectionAnalytics = () => {
-    const headers = {"admin": "admin"};
+    const headers = {user: "admin"};
     const data = {email: "admin", password:"pass"};
-    axios.post(redirectionAnalyticsURL, data)    // CHANGE HERE
+    axios.get(redirectionAnalyticsURL, {headers: headers})
       .then(res => {
         console.log(res);
         if (res.status === 200) {       
@@ -112,27 +101,16 @@ export default function AdminHome(props) {
   }
 
   const past12Months = pastXMonths(12);
-  
-  const userLinkAnalytics = () => {
-    const headers = {"admin": "admin"};
-    const data = {email: "admin", password:"pass"};
-    axios.post(userLinkAnalyticsURL, data, {headers: headers})    // CHANGE HERE
-      .then(res => {
-        console.log(res);
-        if (res.status === 200) {       
-          //setShortenedUrl(redirectionUrl + res.data.hash);
-        } else {
-          console.log(res)
-        }
-      })
-      .catch(res => console.log(res));
-  }
 
   if (redirectionDataUpdated && urlCreationDataUpdated) {
     return(
       <div>
         <NavBar page={"admin"}/>
         <Container component="main" maxWidth="md">
+          <CssBaseline />
+          <Typography component="h1" variant="h5">
+            System-wide Analytics
+          </Typography>
           <Grid container spacing={5}>
             <Grid item xs={12} md={8} lg={9} spacing={3}>
               <Paper className={fixedHeightPaper}>
@@ -153,21 +131,7 @@ export default function AdminHome(props) {
                   yAxisData={redirectionAnalyticsChartData}
                 />
               </Paper>
-            </Grid> 
-            {
-              /*
-                <Grid item xs={12} md={8} lg={9} spacing={3}>
-                  <Paper className={fixedHeightPaper}>
-                    <Chart 
-                      title={"Monthly URL Creation Analytics"} 
-                      yAxisLable={"Monthly User Creation"} 
-                      xAxisData={past12Months}
-                      yAxisData={redirectionAnalyticsChartData}
-                    />
-                  </Paper>
-                </Grid>
-              */
-            }            
+            </Grid>             
           </Grid>
         </Container>                
       </div>
@@ -184,51 +148,6 @@ export default function AdminHome(props) {
             <Typography component="h1" variant="h5">
                     Admin page - Analytics are loading...
             </Typography>
-            {
-              /*
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={() => urlCreation()}
-                  //component={Link}
-                  //to="/ahome"
-                  className={classes.submit}
-                >
-                  URL Creation
-                </Button>
-
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={() => redirectionAnalytics()}
-                  //onClick={() => onFinish()}
-                  //component={Link}
-                  //to="/ahome"
-                  className={classes.submit}
-                >
-                  Button 2
-                </Button>
-      
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={() => userLinkAnalytics()}
-                  //onClick={() => onFinish()}
-                  //component={Link}
-                  //to="/ahome"
-                  className={classes.submit}
-                >
-                  Button 3
-                </Button>
-                
-              */
-            }
           </div>
         </Container>              
       </div>      

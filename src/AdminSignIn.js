@@ -43,7 +43,7 @@ export default function AdminSignIn(props) {
     .then(res => {
       if (res.status === 200) {        
         console.log("Response  ", res);
-        props.handleSuccessfulAuth(email);
+        props.handleSuccessfulAuth(email, password);
         props.history.push(`/ahome`);
       } else {
         console.log(res);
@@ -101,8 +101,6 @@ export default function AdminSignIn(props) {
           variant="contained"
           color="primary"
           onClick={() => onFinish()}
-          //component={Link}
-          //to="/ahome"
           className={classes.submit}
         >
           Sign In
