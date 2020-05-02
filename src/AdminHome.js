@@ -52,11 +52,9 @@ export default function AdminHome(props) {
 
   const urlCreationAnalyticURL = "http://18.196.128.47:8080/Urls/lastMonthsUrlCreationAnalytics";
   const redirectionAnalyticsURL = "http://18.196.128.47:8080/Urls/lastMonthsRedirectionAnalytics";
-  const userLinkAnalyticsURL = "http://18.196.128.47:8080/Urls/lastMonthsUserLinkAnalytics";
 
   const urlCreation = () => {
     const headers = {user: "admin"};
-    const data = {email: "admin", password:"pass"};
     axios.get(urlCreationAnalyticURL, {headers: headers})
       .then(res => {
         console.log(res);
@@ -72,7 +70,6 @@ export default function AdminHome(props) {
 
   const redirectionAnalytics = () => {
     const headers = {user: "admin"};
-    const data = {email: "admin", password:"pass"};
     axios.get(redirectionAnalyticsURL, {headers: headers})
       .then(res => {
         console.log(res);
