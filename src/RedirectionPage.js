@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default function RedirectionPage({ match, location }) {
     const [hash, setHash] = useState(match.params.hash);
-    const apiUrl = "http://52.59.23.76:8080/Urls/";
+    const apiUrl = "http://3.120.199.92:8080/Urls/";
 
     const onFinish = () =>  {
         //console.log("here ", props.email);

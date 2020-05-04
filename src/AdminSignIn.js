@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AdminSignIn(props) {
   const classes = useStyles();
-  const loginAPIURL = "http://52.59.23.76:8080/login";
+  const loginAPIURL = "http://3.120.199.92:8080/login";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
