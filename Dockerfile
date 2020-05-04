@@ -1,7 +1,8 @@
 FROM node:latest
 WORKDIR '/app'
 COPY package.json .
-RUN npm i forever
+RUN npm install
+
 
 COPY . .
 CMD ["npm","start"]

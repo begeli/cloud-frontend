@@ -43,9 +43,9 @@ export default function LinkAnalytics(props) {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const userURLsAPIURL = "http://18.196.128.47:8080/Urls/userURL";
-  const redirectionAPIURL = "http://18.196.128.47:8080/Urls/";
-  const userLinkAnalyticsURL = "http://18.196.128.47:8080/Urls/lastMonthsUserLinkAnalytics";
+  const userURLsAPIURL = "http://52.59.23.76:8080/Urls/userURL";
+  const redirectionAPIURL = "http://52.59.23.76:8080/Urls/";
+  const userLinkAnalyticsURL = "http://52.59.23.76:8080/Urls/lastMonthsUserLinkAnalytics";
 
   const [userLinkDataUpdated, setUserLinkDataUpdated] = useState(false); 
   const [userLinkAnalyticsChartData, setUserLinkAnalyticsData] = useState([]);

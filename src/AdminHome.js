@@ -50,8 +50,8 @@ export default function AdminHome(props) {
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const urlCreationAnalyticURL = "http://18.196.128.47:8080/Urls/lastMonthsUrlCreationAnalytics";
-  const redirectionAnalyticsURL = "http://18.196.128.47:8080/Urls/lastMonthsRedirectionAnalytics";
+  const urlCreationAnalyticURL = "http://52.59.23.76:8080/Urls/lastMonthsUrlCreationAnalytics";
+  const redirectionAnalyticsURL = "http://52.59.23.76:8080/Urls/lastMonthsRedirectionAnalytics";
 
   const urlCreation = () => {
     const headers = {user: "admin"};
