@@ -7,7 +7,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import NavBar from './NavBar';
+import NavBar from '../components/NavBar';
 import axios from "axios";
 import 'date-fns';
 import Grid from '@material-ui/core/Grid';

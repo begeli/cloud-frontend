@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import MUIDataTable from "mui-datatables";
-import NavBar from './NavBar';
+import NavBar from '../components/NavBar';
 import axios from "axios";
 import { makeStyles } from '@material-ui/core/styles';
-import Chart from './Chart';
+import Chart from '../components/Chart';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';

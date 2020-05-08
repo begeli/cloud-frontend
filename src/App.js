@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import AdminSignIn from './AdminSignIn';
-import AdminHome from './AdminHome';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import Home from './Home';
-import LinkAnalytics from './LinkAnalytics';
-import RedirectionPage from './RedirectionPage';
-import './App.css';
+import AdminSignIn from './pages/AdminSignIn';
+import AdminHome from './pages/AdminHome';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import Home from './pages/Home';
+import LinkAnalytics from './pages/LinkAnalytics';
+import RedirectionPage from './pages/RedirectionPage';
+import './styles/App.css';
 
 export default class  App extends Component {
   constructor() {
