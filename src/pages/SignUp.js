@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Redirect } from "react-router-dom";
 import axios from "axios";
+import * as apiURLs from "../config/config";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,8 +34,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp(props) {  
-  const registrationAPIURL = "http://3.120.199.92:8080/registration";
-
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,7 +41,7 @@ export default function SignUp(props) {
 
   const onSubmit = () =>  {
     const data = {email:email, password:password};
-    axios.post(registrationAPIURL, data)    
+    axios.post(apiURLs.REGISTRATION, data)    
     .then(res => {
       if (res.status === 200) {
         console.log("Response  ", res);        

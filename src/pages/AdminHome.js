@@ -9,6 +9,8 @@ import Chart from '../components/Chart';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
+import * as apiURLs from "../config/config";
+import pastXMonths from "../utils/chartUtil";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,21 +43,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AdminHome(props) {
   const classes = useStyles();
-
   const [redirectionDataUpdated, setRedirectionDataUpdated] = useState(false);
-  const [redirectionAnalyticsChartData, setRedirectionAnalyticsData] = useState([]);
-  
+  const [redirectionAnalyticsChartData, setRedirectionAnalyticsData] = useState([]);  
   const [urlCreationDataUpdated, setUrlCreationDataUpdated] = useState(false);
   const [urlCreationAnalyticsChartData, setUrlCreationAnalyticsData] = useState([]);
-
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
-  const urlCreationAnalyticURL = "http://3.120.199.92:8080/Urls/lastMonthsUrlCreationAnalytics";
-  const redirectionAnalyticsURL = "http://3.120.199.92:8080/Urls/lastMonthsRedirectionAnalytics";
 
   const urlCreation = () => {
     const headers = {user: "admin"};
-    axios.get(urlCreationAnalyticURL, {headers: headers})
+    axios.get(apiURLs.URL_CREATION_ANALYTICS, {headers: headers})
       .then(res => {
         console.log(res);
         if (res.status === 200) {       
@@ -70,7 +66,7 @@ export default function AdminHome(props) {
 
   const redirectionAnalytics = () => {
     const headers = {user: "admin"};
-    axios.get(redirectionAnalyticsURL, {headers: headers})
+    axios.get(apiURLs.URL_REDIRECTION_ANALYTICS, {headers: headers})
       .then(res => {
         console.log(res);
         if (res.status === 200) {       
@@ -81,21 +77,7 @@ export default function AdminHome(props) {
         }
       })
       .catch(res => console.log(res));
-  }
-
-  const pastXMonths = (noOfMonths) => {
-    var monthName = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-    var d = new Date();
-    d.setDate(1);
-    var expectedLength = noOfMonths;
-    var monthsArray = new Array(expectedLength);
-    var i;
-    for (i=0; i<expectedLength; i++) {
-        monthsArray[(monthsArray.length - i - 1) % expectedLength] = monthName[d.getMonth()] + ' ' + d.getFullYear()
-        d.setMonth(d.getMonth() - 1);
-    }
-    return monthsArray;
-  }
+  }  
 
   const past12Months = pastXMonths(12);
 

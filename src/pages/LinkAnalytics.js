@@ -9,6 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
+import * as apiURLs from "../config/config";
+import pastXMonths from "../utils/chartUtil";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,14 +44,8 @@ const useStyles = makeStyles((theme) => ({
 export default function LinkAnalytics(props) {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
-  const userURLsAPIURL = "http://3.120.199.92:8080/Urls/userURL";
-  const redirectionAPIURL = "http://3.120.199.92:8080/Urls/";
-  const userLinkAnalyticsURL = "http://3.120.199.92:8080/Urls/lastMonthsUserLinkAnalytics";
-
   const [userLinkDataUpdated, setUserLinkDataUpdated] = useState(false); 
-  const [userLinkAnalyticsChartData, setUserLinkAnalyticsData] = useState([]);
-  
+  const [userLinkAnalyticsChartData, setUserLinkAnalyticsData] = useState([]);  
   const columns = ["Full URL", "Shortened URL", "Number of Clicks", "Expiration Date"];
   const [dataUpdated, setDataUpdated] = useState(false);
   const [table_data, setTableData] = useState([]);
@@ -57,26 +53,12 @@ export default function LinkAnalytics(props) {
     responsive: 'scroll', whiteSpace: 'nowrap', selectableRows: false
   };
 
-  const pastXMonths = (noOfMonths) => {
-    var monthName = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-    var d = new Date();
-    d.setDate(1);
-    var expectedLength = noOfMonths;
-    var monthsArray = new Array(expectedLength);
-    var i;
-    for (i=0; i<expectedLength; i++) {
-        monthsArray[(monthsArray.length - i - 1) % expectedLength] = monthName[d.getMonth()] + ' ' + d.getFullYear()
-        d.setMonth(d.getMonth() - 1);
-    }
-    return monthsArray;
-  }
-
   const past12Months = pastXMonths(12);
   
   const userLinkAnalytics = () => {
     const headers = {admin: "admin"};
     const data = {email: props.email, password: props.password, role: "user"};
-    axios.post(userLinkAnalyticsURL, data, {headers: headers}) 
+    axios.post(apiURLs.LAST_MONTHS_URL_REDIRECTIONS, data, {headers: headers}) 
       .then(res => {
         console.log(res);
         if (res.status === 200) {       
@@ -95,7 +77,7 @@ export default function LinkAnalytics(props) {
     }
     console.log("All user urls");
     console.log(headers);
-    axios.get(userURLsAPIURL, {headers: headers})    
+    axios.get(apiURLs.USER_URLs, {headers: headers})    
     .then(res => {
       console.log(res);
       if (res.status === 200) {     
@@ -103,7 +85,7 @@ export default function LinkAnalytics(props) {
         var i;
         const data = [];
         for (i = 0; i < res.data.length; i++) {
-          const table_row = [res.data[i].URL, redirectionAPIURL + res.data[i].hash, res.data[i].noOfClick, res.data[i].date];
+          const table_row = [res.data[i].URL, apiURLs.REDIRECTION + res.data[i].hash, res.data[i].noOfClick, res.data[i].date];
           data.push(table_row);            
         }
         console.log("data is " + data);

@@ -13,6 +13,7 @@ import 'date-fns';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker} from '@material-ui/pickers';
+import * as apiURLs from "../config/config";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,10 +36,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Home(props) {
-  const redirectionUrl = "http://3.120.199.92:8080/Urls/";
-  const urlShorteningAPIURL = "http://3.120.199.92:8080/Urls/shorten";
-  const customUrlShorteningAPIURL = "http://3.120.199.92:8080/Urls/customshorten";
-
   const classes = useStyles();
   const [originalUrl, setOriginalUrl] = useState("");
   const [originalUrl4Custom, setOrginal4Custom] = useState("");
@@ -73,11 +70,11 @@ export default function Home(props) {
       const data = {_id: null, URL:originalUrl, hash:"", userMail:props.email, date:convert(selectedDate.toString())};
       console.log(data);
       
-      axios.post(urlShorteningAPIURL, data)    
+      axios.post(apiURLs.SHORTENING, data)    
       .then(res => {
         console.log(res);
         if (res.status === 200) {       
-          setShortenedUrl(redirectionUrl + res.data.hash);
+          setShortenedUrl(apiURLs.REDIRECTION + res.data.hash);
         } else {
           console.log(res)
         }
@@ -95,11 +92,11 @@ export default function Home(props) {
       }
       const data = {_id: null, URL:originalUrl4Custom, hash:customUrl, userMail:props.email, date:convert(selectedDate4Custom.toString())};
       console.log(data);
-      axios.post(customUrlShorteningAPIURL, data, {headers: headers})    
+      axios.post(apiURLs.CUSTOM_SHORTENING, data, {headers: headers})    
       .then(res => {
         console.log(res);
         if (res.status === 200) {       
-          setCustomShortenedUrl(redirectionUrl + res.data.hash);
+          setCustomShortenedUrl(apiURLs.REDIRECTION + res.data.hash);
         } else {
           console.log(res)
         }

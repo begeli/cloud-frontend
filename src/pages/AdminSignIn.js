@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { Link } from "react-router-dom";
 import axios from "axios";
+import * as apiURLs from "../config/config";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,13 +34,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AdminSignIn(props) {
   const classes = useStyles();
-  const loginAPIURL = "http://3.120.199.92:8080/login";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const onFinish = () =>  {
     const data = {email:email, password:password};
-    axios.post(loginAPIURL, data)    
+    axios.post(apiURLs.LOGIN, data)    
     .then(res => {
       if (res.status === 200) {        
         console.log("Response  ", res);

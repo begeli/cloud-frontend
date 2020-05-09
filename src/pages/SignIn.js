@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { BrowserRouter as Router, Switch, Route, Link, useHistory, Redirect } from "react-router-dom";
 import axios from "axios";
+import * as apiURLs from "../config/config";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,9 +33,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn(props) {
-  //const loginAPIURL = "http://18.197.151.94:8080/login";
-  const loginAPIURL = "http://3.120.199.92:8080/login";
-
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,7 +40,7 @@ export default function SignIn(props) {
 
   const onFinish = () =>  {
     const data = {email:email, password:password};
-    axios.post(loginAPIURL, data)    
+    axios.post(apiURLs.LOGIN, data)    
     .then(res => {
       if (res.status === 200) {        
         console.log("Response  ", res);
